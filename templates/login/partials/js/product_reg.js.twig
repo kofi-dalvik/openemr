@@ -7,13 +7,32 @@
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('authUser').focus();
 
-        togglePass = document.getElementById('toggle-pass');
+        const togglePass = document.getElementById('toggle-pass');
+        const clearPass = document.getElementById('clearPass');
+        let typingTimeout;
+
         togglePass.addEventListener('click', (e) => {
             e.preventDefault();
-            const clearPass = document.getElementById('clearPass');
             const type = clearPass.getAttribute('type') === 'password' ? 'text' : 'password';
             clearPass.setAttribute('type', type);
             togglePass.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
+        });
+
+        clearPass.addEventListener('input', (e) => {
+            clearTimeout(typingTimeout);
+
+            if (clearPass.getAttribute('type') === 'text') {
+                return;
+            }
+
+            clearPass.setAttribute('type', 'text');
+            const passValue = clearPass.value;
+            const mask = Array(passValue.length - 1).fill('•').join('')
+            clearPass.value = mask + passValue.slice(-1);
+            typingTimeout = setTimeout(() => {
+                clearPass.setAttribute('type', 'password');
+                clearPass.value = passValue;
+            }, 200);
         });
     });
 
