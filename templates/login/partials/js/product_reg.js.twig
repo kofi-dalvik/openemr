@@ -19,27 +19,6 @@
             clearPass.setAttribute('type', type);
             togglePass.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
         });
-
-        // Add event listener to the password input
-        clearPass.addEventListener('input', (e) => {
-            clearTimeout(typingTimeout);
-
-            if (clearPass.getAttribute('type') === 'text') {
-                return;
-            }
-
-            // create a mask and replace the password value with it
-            clearPass.setAttribute('type', 'text');
-            const passValue = clearPass.value;
-            const mask = Array(passValue.length - 1).fill('•').join('')
-            clearPass.value = mask + passValue.slice(-1);
-
-            // Set a timeout to remove the mask after 200ms
-            typingTimeout = setTimeout(() => {
-                clearPass.setAttribute('type', 'password');
-                clearPass.value = passValue;
-            }, 200);
-        });
     });
 
     $(document).ready(init());
