@@ -6,6 +6,15 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('authUser').focus();
+
+        togglePass = document.getElementById('toggle-pass');
+        togglePass.addEventListener('click', (e) => {
+            e.preventDefault();
+            const clearPass = document.getElementById('clearPass');
+            const type = clearPass.getAttribute('type') === 'password' ? 'text' : 'password';
+            clearPass.setAttribute('type', type);
+            togglePass.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
+        });
     });
 
     $(document).ready(init());
