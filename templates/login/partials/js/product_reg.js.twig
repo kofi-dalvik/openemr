@@ -7,10 +7,12 @@
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('authUser').focus();
 
+        // Get the password input and the toggle button
         const togglePass = document.getElementById('toggle-pass');
         const clearPass = document.getElementById('clearPass');
         let typingTimeout;
 
+        // Add event listener to the toggle button
         togglePass.addEventListener('click', (e) => {
             e.preventDefault();
             const type = clearPass.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -18,6 +20,7 @@
             togglePass.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
         });
 
+        // Add event listener to the password input
         clearPass.addEventListener('input', (e) => {
             clearTimeout(typingTimeout);
 
@@ -25,10 +28,13 @@
                 return;
             }
 
+            // create a mask and replace the password value with it
             clearPass.setAttribute('type', 'text');
             const passValue = clearPass.value;
             const mask = Array(passValue.length - 1).fill('•').join('')
             clearPass.value = mask + passValue.slice(-1);
+
+            // Set a timeout to remove the mask after 200ms
             typingTimeout = setTimeout(() => {
                 clearPass.setAttribute('type', 'password');
                 clearPass.value = passValue;
